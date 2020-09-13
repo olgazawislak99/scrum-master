@@ -1,7 +1,7 @@
 
 ###> symfony/framework-bundle ###
-.env.test
-.env
+/.env.test/
+/.env/
 /.env.local
 /.env.local.php
 /.env.*.local
@@ -18,3 +18,4 @@
 ###< symfony/phpunit-bridge ###
 
 .idea
+/migrations
