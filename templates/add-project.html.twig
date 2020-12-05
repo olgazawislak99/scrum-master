@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('create-sprint') }}
+{% endblock %}
+{% block title %}Add project{% endblock %}
+
+{% block body %}
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('create-sprint') }}
+    {% endblock %}
+    {{ include('common/navbar.html.twig') }}
+    {{ form_start(projectForm) }}
+    {% for message in app.flashes('notice') %}
+        <div class="alert" role="alert">{{ message }}</div>
+    {% endfor %}
+    <h1 class="h3 mb-3 font-weight-normal">Dodaj projekt</h1>
+    <div class="form-group ">
+        {{ form_row(projectForm.name,{'attr' : {'class' : 'form-control'}, 'label' : 'Nazwa' }) }}
+    </div>
+    <div class="form-group input-date-range">
+        {{ form_row(projectForm.users ,{'attr' : {'class' : 'form-control'}} )}}
+    </div>
+    <div class="but">
+        <button type="submit" class="btn btn-lg">Add</button>
+    </div>
+    {{ form_end(projectForm) }}
+    {{ include('common/footer.html.twig') }}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('create-sprint') }}
+{% endblock %}
+{% block title %}Tworzenie sprintu{% endblock %}
+
+{% block body %}
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('create-sprint') }}
+    {% endblock %}
+    {{ include('common/navbar.html.twig') }}
+    {{ form_start(sprintForm) }}
+    {% for message in app.flashes('notice') %}
+        <div class="alert" role="alert">{{ message }}</div>
+    {% endfor %}
+    <h1 class="h3 mb-3 font-weight-normal">Dodaj sprint</h1>
+    <div class="form-group ">
+        {{ form_row(sprintForm.name,{'attr' : {'class' : 'form-control','oninvalid' : 'setCustomValidity(\'Wpisz nazwę\')', 'onchange' : 'setCustomValidity(\'\')'}, 'label' : 'Nazwa sprintu' }) }}
+    </div>
+    <div class="form-group input-date-range">
+        {{ form_row(sprintForm.startDate,{'attr' : {'class' : 'form-control input1','autocomplete': 'off','oninvalid' : 'setCustomValidity(\'Wybierz datę\')', 'onchange' : 'setCustomValidity(\'\')'}} )}}
+    </div>
+    <div class="form-group">
+        {{ form_row(sprintForm.endDate,{'attr' : {'class' : 'form-control input2','autocomplete': 'off','oninvalid' : 'setCustomValidity(\'Wybierz datę\')', 'onchange' : 'setCustomValidity(\'\')'}} ) }}
+    </div>
+    <div class="but">
+        <button type="submit" class="btn btn-lg">Dodaj</button>
+    </div>
+    {{ form_end(sprintForm) }}
+    {{ include('common/footer.html.twig') }}
+{% endblock %}

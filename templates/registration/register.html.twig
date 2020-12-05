@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('register') }}
+{% endblock %}
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    {% for flashError in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
+
+    {{ form_start(registrationForm) }}
+    <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+    <div class="form-group">
+        {{ form_row(registrationForm.name,{'attr' : {'class' : 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_row(registrationForm.email,{'attr' : {'class' : 'form-control'}}) }}
+    </div>
+    {{ form_row(registrationForm.password) }}
+
+    <div class="but">
+        <button type="submit" class="btn btn-lg">Register</button>
+    </div>
+
+    {{ form_end(registrationForm) }}
+{% endblock %}

@@ -1,0 +1,24 @@
+@import 'global';
+body{
+  background: #000000;
+}
+.ui-datepicker{
+  background-color: #000;
+}
+.ui-datepicker-today>a{
+  color: #88cc00 !important;
+}
+.ui-state-active{
+  color: #c82333;
+}
+.ui-datepicker-days-cell-over>.ui-state-default{
+  color: royalblue;
+}
+
+@media only screen and (max-width: 1124px){
+  .footer-container{
+    display: none !important;
+  }form {
+     z-index: 1;
+   }
+}

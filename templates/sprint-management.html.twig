@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('sprint-management') }}
+{% endblock %}
+{% block title %}Edycja sprintu{% endblock %}
+
+{% block body %}
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('sprint-management') }}
+    {% endblock %}
+
+    {{ include('common/navbar.html.twig') }}
+    <div class="profile-container">
+        <div id="top-bar">
+            <div class="goal">
+                <h1 class="h3 mb-3 font-weight-normal">{{ sprint.name }}</h1>
+                <h1 class="h3 mb-3 font-weight-normal">{{ sprint.startDate|date('d/m/Y') }}
+                    - {{ sprint.endDate|date('d/m/Y') }}</h1>
+                <div id="profile-content">
+                    <div id="profile-info">
+                        <div id="profile-menu" class="nav nav-tabs">
+                            <a class="nav-item nav-link active" data-toggle="tab" href="#info">Dodaj cele do sprintu</a>
+                        </div>
+                        <div class="profile-info-tab tab-content">
+                            <div class="circles tab-pane active container" id="info">
+
+                                <form id="add-sub-goal-form" method="post" name="add-sub-goal-form">
+                                    <h1 class="h4 mb-3 font-weight-normal">Dodaj cel</h1>
+                                    <div id="sub-goal-alert" class="alert show" role="alert">Niepoprawne dane</div>
+                                    <div class="form-group">
+                                        <input type="text" placeholder="nazwa celu" name="name" id="name"
+                                               class="form-control form-name" required
+                                               oninvalid="this.setCustomValidity('Wpisz nazwę')"
+                                               onchange="setCustomValidity('')"
+                                               autofocus>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea cols="30" rows="10" placeholder="opis celu" name="desc" id="desc"
+                                                                            class="form-control form-desc"
+                                                  autofocus></textarea>
+                                    </div>
+                                    <div class="but">
+                                        <button class="btn btn-lg add-sub-goal" data-id={{ sprint.id }}>
+                                            Dodaj
+                                        </button>
+                                    </div>
+                                </form>
+                                <div class="sub-goals">
+                                    <ul id="sub-goals-list" class="list-group-flush">
+                                        {% if goals == null %}
+                                            <h1 class="h4 no-sub-goals">Tu pojawią się cele</h1>
+                                        {% endif %}
+                                        {% for goal in goals %}
+                                            <li class="list-group-item">
+                                                <a class="name-button"
+                                                   href="{{ path('goal-management',{'goalId': goal.id}) }}">{{ goal.name }}</a>
+
+                                                <button class="fas fa-trash-alt delete-sub-goal"
+                                                        data-id="{{ goal.id }}"></button>
+                                                {% if goal.users is not empty %}
+                                                    <i class="fas fa-check have-user"></i>
+                                                {% endif %}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ include('common/footer.html.twig') }}
+{% endblock %}

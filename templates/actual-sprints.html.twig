@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('actual-sprint') }}
+{% endblock %}
+{% block title %}Aktualne cele{% endblock %}
+
+{% block body %}
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('actual-sprint') }}
+    {% endblock %}
+    {{ include('common/navbar.html.twig') }}
+    <div class="actual-goals-container">
+
+            <div class="title">
+                {% if sprint != null %}
+                <a href="{{ path("sprint-management", {'sprintId':  sprint.id} ) }}"><h1
+                            class="h2">{{ sprint.name }}</h1></a>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                         role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="arrow">
+                <a href="{{ path('actual-sprint', {'week' : prev}) }}"><i class="fas fa-chevron-left"></i></a>
+            </div>
+            <div class="list-container">
+                <ul id="goals-list" class="list-group">
+                    {% for goal in goals %}
+                        {% if sprint == goal.sprint %}
+                                {% if goal.users is not empty %}
+                                    <li class="list-group-item goal {% if goal.goalDesc is empty %} no-desc {% endif %}">
+                                        <div class="dropdown">
+                                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Użytkownicy
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                {% for user in goal.users %}
+                                                <h1 class="dropdown-item username h5"><img
+                                                            src="{% if user.photoFilename %} {{ asset('img/' ~ user.photoFilename) }} {% else %}{{ asset('img/profile.png') }} {% endif %}"
+                                                            alt="profile"/>{{ user.name }}</h1>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <h1 class="h4 goal-name" data-id="{{ goal.id }}">{{ goal.name }}</h1>
+                                        <i class="fas fa-check-circle check {% if goal.isDone == 1 %}green{% endif %}"
+                                                data-goal-id={{ goal.id }}></i>
+                                    </li>
+                                    {% if goal.goalDesc is not empty %}
+                                    <li class="list-group-item goal-description">
+                                        <button class="sub-goals-down"><i class="fas fa-chevron-down"></i></button>
+                                        <p class="hidden">{{ goal.goalDesc }}</p>
+                                    </li>
+                                        {% endif %}
+                                {% endif %}
+                        {% endif %}
+                    {% endfor %}
+
+                </ul>
+            </div>
+
+            <div class="arrow">
+                <a href="{{ path('actual-sprint', {'week' : next}) }}"><i class="fas fa-chevron-right"></i></a>
+            </div>
+
+
+    </div>
+    {{ include('common/footer.html.twig') }}
+{% endblock %}

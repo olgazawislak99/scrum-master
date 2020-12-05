@@ -1,0 +1,13 @@
+.register-link{
+  &, &:hover{
+    text-decoration: none;
+    outline: none;
+    color: #499ecc;
+  }
+}
+@media only screen and (max-width: 600px) {
+  form{
+    margin: 1em;
+    border: none;
+  }
+}

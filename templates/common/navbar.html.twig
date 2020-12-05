@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('navbar') }}
+{% endblock %}
+{% block title %}Users{% endblock %}
+{% block body %}
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('navbar') }}
+    {% endblock %}
+    <nav class="navbar navbar-expand-lg justify-content-between">
+        <a class="navbar-brand" href="{{ path('home')}}">
+            <img src="{{ asset('build/images/logo.png') }}" alt="logo"/></a>
+           {% for project in projects %}
+               <a class="project {% if project.isActual == true %} actual {% endif %}" data-project-id="{{ project.id }}">{{ project.name }}</a>
+            {% endfor %}
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                {% if projects != null %}
+                    <li class="nav-item">
+                        <a data-toggle="tooltip" data-placement="bottom" title="Backlog" class="nav-link "
+                           href="{{ path('backlog') }}"><i class="far fa-lightbulb"></i><span
+                                    class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="tooltip" data-placement="bottom" title="Aktualne cele" class="nav-link"
+                           href="{{ path('actual-sprint', {'week': '0'}) }}"><i class="fas fa-th-list"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="tooltip" data-placement="bottom" title="Dodaj cel" class="nav-link"
+                           href="{{ path('create-sprint') }}"><i class="fas fa-plus"></i><span
+                                    class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="tooltip" data-placement="bottom" title="Profil" class="nav-link"
+                           href="{{ path('profile') }}"><i class="far fa-user"></i><span
+                                    class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="tooltip" data-placement="bottom" title="Add project" class="nav-link"
+                           href="{{ path('add-project') }}"><i class="fas fa-plus"></i><span
+                                    class="sr-only">(current)</span>Add project</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a data-toggle="tooltip" data-placement="bottom" title="Add project" class="nav-link"
+                           href="{{ path('add-project') }}"><i class="fas fa-plus"></i><span
+                                    class="sr-only">(current)</span>Add project</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a data-toggle="tooltip" data-placement="bottom" title="Wyloguj się" class="nav-link "
+                       href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i><span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+{% endblock %}

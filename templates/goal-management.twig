@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('goal-management') }}
+{% endblock %}
+{% block title %}Edycja sprintu{% endblock %}
+
+{% block body %}
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('goal-management') }}
+    {% endblock %}
+
+    {{ include('common/navbar.html.twig') }}
+    <div class="profile-container">
+        <div id="top-bar">
+            <div class="goal">
+                <h1 class="h3 mb-3 font-weight-normal">{{ goal.name }}</h1>
+                <div id="profile-content">
+                    <div id="profile-info">
+                        <div id="profile-menu" class="nav nav-tabs">
+                            <a class="nav-item nav-link active profile-menu-edit" data-toggle="tab"
+                               href="#edit">Edytuj cel</a>
+                        </div>
+                        <div class="profile-info-tab tab-content">
+                            <div class="profile-edit tab-pane active container " id="edit">
+                                <div class="desc">
+                                    <textarea data-id="{{ goal.id }}" cols="40" rows="15" class="form-control form-desc"> {{ desc }}</textarea>
+
+                                </div>
+                                <div class="add-user-form">
+                                    {{ form_start(form) }}
+                                    <div class="form-group">
+                                        {{ form_row(form) }}
+                                    </div>
+                                    <div class="but">
+                                        <button type="submit" class="btn btn-lg add-btn">Dodaj</button>
+                                    </div>
+                                    {{ form_end(form) }}
+                                </div>
+                                <div class="sub-goals">
+                                    <ul id="sub-goals-list" class="list-group-flush">
+                                        {% for goalUser in goalUsers %}
+                                            <li class="list-group-item usr">
+                                                <form class="delete-form"
+                                                      action="/usersGoals/{{ goalUser.id }}/{{ goal.id }}" method="post"
+                                                      name="delete-user-{{ goalUser.id }}">
+                                                    {{ goalUser.name }}
+                                                        <button type="submit"
+                                                                class="fas fa-trash-alt delete-user"></button>
+                                                </form>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    {{ include('common/footer.html.twig') }}
+{% endblock %}

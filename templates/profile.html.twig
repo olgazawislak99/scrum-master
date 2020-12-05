@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('profile') }}
+{% endblock %}
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('profile') }}
+    {% endblock %}
+    {{ include('common/navbar.html.twig') }}
+    <div class="profile-container">
+        <div id="top-bar">
+            <h1 class="h1 mb-3 font-weight-normal">{{ app.user.name }}</h1>
+            <h1 class="h3 mb-3 font-weight-normal">{{ app.user.email }}</h1>
+            <div id="profile-content">
+                <div id="profile-info">
+                    <div id="profile-menu" class="nav nav-tabs">
+                        <a class="nav-item nav-link active" data-toggle="tab" href="#info">Informacje</a>
+                        <a class="nav-item nav-link profile-menu-edit" data-toggle="tab" href="#edit">Edycja</a>
+                    </div>
+                    <div class="profile-info-tab tab-content">
+                        <div class="circles tab-pane active container" id="info">
+                            <div class="circle">
+                                <div class="rounded-circle">
+                                    {{ doneGoals }}
+                                </div>
+                                <p>Wykonane cele</p>
+                            </div>
+                            <div class="circle undone">
+                                <div class="rounded-circle">
+                                    {{ undoneGoals }}
+                                </div>
+                                <p>Pozostałe cele</p>
+                            </div>
+                        </div>
+                        <div class="profile-edit tab-pane container fade" id="edit">
+                            <form id="change-pwd-form" name="change_pwd" method="post">
+                                <div class="alert-fail show" role="alert">Niepoprawne dane</div>
+                                <div class="alert-suc show" role="alert">Sukces! Zmieniłeś hasło</div>
+                                <h1 class="h4 mb-3 font-weight-normal">Zmień hasło</h1>
+                                <div class="form-group">
+                                    <label for="name">Stare hasło</label>
+                                    <input type="password" name="old-password" id="old-pwd" class="form-control"
+                                           required
+                                           oninvalid="this.setCustomValidity('Wpisz stare hasło')"
+                                           oninput="setCustomValidity('')" autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Nowe hasło</label>
+                                    <input type="password" name="new-password" id="new-pwd" class="form-control"
+                                           required
+                                           oninvalid="this.setCustomValidity('Wpisz nowe hasło (min. 6 znaków)')"
+                                           oninput="setCustomValidity('')"
+                                           minlength="6" autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Powtórz hasło</label>
+                                    <input type="password" name="confirm-password" id="confirm-pwd" class="form-control"
+                                           required
+                                           oninvalid="this.setCustomValidity('Powtórz hasło')"
+                                           oninput="setCustomValidity('')"
+                                           minlength="6" autofocus>
+                                </div>
+                                <div class="but">
+                                    <button class="btn btn-lg change-pwd" data-id="{{ app.user.id }}">
+                                        Zmień
+                                    </button>
+                                </div>
+                            </form>
+                            <div class="upload-photo">
+                                <div class="photo">
+                                    <h1 class="h4 mb-2 font-weight-normal">Zdjęcie profilowe</h1>
+                                    <img src="{% if app.user.photoFilename %} {{ asset('img/' ~ app.user.photoFilename) }} {% else %}{{ asset('img/profile.png')}} {% endif %}"
+                                         alt="profile"/>
+                                </div>
+                                {{ form_start(form, {'attr': {'id': 'add-user-form'}}) }}
+                                <div class="photo-error">
+                                    {{ form_errors(form.photo) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_widget(form.photo,{'attr' : {'style': "display:none;",'oninvalid' : 'setCustomValidity(\'Wybierz zdjęcie\')', 'onchange' : 'setCustomValidity(\'\')'}} ) }}
+                                    <div class="but"> <button class=" btn addFile">Wybierz</button></div>
+                                </div>
+                                <div class="but">
+                                    <button type="submit" class="btn btn-lg btn-photo">Dodaj</button>
+                                </div>
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {{ include('common/footer.html.twig') }}
+{% endblock %}

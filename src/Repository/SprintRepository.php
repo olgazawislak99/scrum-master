@@ -20,12 +20,14 @@ class SprintRepository extends ServiceEntityRepository
         parent::__construct($registry, Sprint::class);
     }
 
-    public function findActualWeekSprint(string $firstDayOfWeek, string $lastDayOfWeek)
+    public function findActualWeekSprint(string $firstDayOfWeek, string $lastDayOfWeek, $project)
     {
         return $this->createQueryBuilder('s')
-            ->andWhere("s.start_date >= :first AND  DATE_ADD(s.end_date, 23, 'HOUR') <= :last")
+            ->where('s.project = (:project)')
+            ->andWhere("s.start_date >= :first AND  s.end_date <= :last")
             ->setParameter('first', $firstDayOfWeek)
             ->setParameter('last', $lastDayOfWeek)
+            ->setParameter('project', $project)
             ->getQuery()
             ->getOneOrNullResult();
     }

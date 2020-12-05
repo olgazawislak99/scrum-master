@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=SprintRepository::class)
+ * @ORM\Entity(repositoryClass=ProjectRepository::class)
  */
 class Project
 {
@@ -25,9 +25,20 @@ class Project
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="goals")
+     * @ORM\Column(type="boolean")
+     */
+    private $isActual;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="projects")
      */
     private $users;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="user")
+     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id", nullable=true)
+     */
+    private $ownerUser;
 
 
     public function __construct()
@@ -43,7 +54,7 @@ class Project
     public function addUser($user): void
     {
         /** @var User $user */
-        $user->addGoal($this);
+        $user->addProject($this);
         $this->users->add($user);
     }
 
@@ -84,5 +95,37 @@ class Project
     public function setName($name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsActual()
+    {
+        return $this->isActual;
+    }
+
+    /**
+     * @param mixed $isActual
+     */
+    public function setIsActual($isActual): void
+    {
+        $this->isActual = $isActual;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOwnerUser()
+    {
+        return $this->ownerUser;
+    }
+
+    /**
+     * @param mixed $ownerUser
+     */
+    public function setOwnerUser($ownerUser): void
+    {
+        $this->ownerUser = $ownerUser;
     }
 }

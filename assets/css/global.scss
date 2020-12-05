@@ -1,0 +1,78 @@
+@import "~bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+$base-blue: #499ecc;
+$base-light-grey : #ddd;
+$base-dark-grey: #8f8f8f;
+$black-with-opacity:  rgba(255, 255, 255, 0.125);
+$border: 1px solid;
+
+html,body{
+  height: 100%;
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000000;
+  font-family: Roboto, sans-serif !important;
+}
+.h1, .h3, .form-group{
+  color: $base-dark-grey;
+}
+form {
+  width: 25em;
+  padding: 3em;
+  border: $border $base-blue;
+  border-radius: 2em;
+  color: $base-dark-grey ;
+}
+
+.but{
+  display: flex;
+}
+button{
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 1.1em;
+}
+.btn, .btn:focus{
+  background: $base-blue;
+  box-shadow: none;
+  color: #000000;
+}
+.form-control:focus{
+  border-color: $base-blue;
+  box-shadow: none;
+}
+.alert{
+  font-weight: 600;
+  text-align: center;
+  color: #cc0000;
+}
+.bg-success{
+  &.one{
+    background-color: #cc0000 !important;
+  }
+  &.two {
+    background-color: #d65a00 !important;
+  }
+  &.three {
+    background-color: #d38e00 !important;
+  }
+  &.four {
+    background-color: #c4be00 !important;
+  }
+  &.five {
+    background-color: #88cc00 !important;
+  }
+
+}
+
+@media only screen and (max-width: 1250px) {
+  body {
+    background: #000 !important;
+  }
+  form{
+    border: none;
+  }
+}

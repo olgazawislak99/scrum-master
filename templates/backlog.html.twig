@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('backlog') }}
+{% endblock %}
+{% block title %}Backlog{% endblock %}
+
+{% block body %}
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('backlog') }}
+    {% endblock %}
+    {{ include('common/navbar.html.twig') }}
+    <div id="backlog-container">
+        <ul class="list-group backlog-list">
+            {% for backlogGoal in backlogGoals %}
+                <li class="list-group-item">
+                    {{ backlogGoal.name }}
+                    <form method="post">
+                        <input name="goalId" type="hidden" value="{{ backlogGoal.id }}">
+                    <button class="add-to-sprint-btn" type="submit">
+                        <i class="fas fa-plus"></i>
+                        dodaj do aktualnego sprintu
+                    </button>
+                    </form>
+
+                </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+    {{ include('common/footer.html.twig') }}
+{% endblock %}

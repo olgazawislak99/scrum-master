@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('home') }}
+{% endblock %}
+{% block title %}Strona główna{% endblock %}
+
+{% block body %}
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('home') }}
+    {% endblock %}
+    {{ include('common/navbar.html.twig') }}
+    <div class="home-container">
+        {% if goals == null %}
+            <h1 class="h3 mb-3 font-weight-normal no-goals">Tu pojawią się twoje cele</h1>
+        {% endif %}
+        <div class="list-container">
+            <div class="user-info">
+                <img src="{% if app.user.photoFilename %} {{ asset('img/' ~ app.user.photoFilename) }} {% else %}{{ asset('img/profile.png') }} {% endif %}"
+                     alt="profile">
+            </div>
+            <div id="down">
+                <ul id="goals-list " class="timeline">
+                    {% for goal in goals %}
+                        <li class="goal">
+                            <div class="timeline-badge">
+                                <a><i class="fa fa-circle" id=""></i></a>
+                            </div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <button class="goal-name" data-id="{{ goal.id }}">{{ goal.name }}</button>
+                                <button class="fas fa-trash-alt delete-goal" data-id={{ goal.id }}></button>
+                                <a href="{{ path('goal-management',{'goalId': goal.id}) }}">
+                                    <button class="fas fa-edit edit-goal" data-id={{ goal.id }}></button>
+                                </a>
+                                    <button class="fas fa-check-circle check {% if goal.isDone == 1 %}green{% endif %}"
+                                            data-goal-id={{ goal.id }}></button>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>{{ goal.goalDesc }}</p>
+                                </div>
+                                <div class="timeline-footer">
+                                    <a class="sprint" href="{{ path('sprint-management',{'sprintId': goal.sprint.id}) }}">{{ goal.sprint.name }}</a>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    {{ include('common/footer.html.twig') }}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('footer') }}
+{% endblock %}
+{% block title %}Users{% endblock %}
+{% block body %}
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('footer') }}
+    {% endblock %}
+    <div class="footer-container">
+        <h1 class="h6">Copyright © Olga Zawiślak| All Rights Reserved</h1>
+    </div>
+{% endblock %}
